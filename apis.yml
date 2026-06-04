@@ -1,0 +1,88 @@
+---
+aid: university-of-freiburg
+name: University of Freiburg
+description: >-
+  The University of Freiburg (Albert-Ludwigs-Universität Freiburg) is a public
+  research university in Freiburg im Breisgau, Germany, founded in 1457 and
+  ranked #212 in the QS World University Rankings 2025. It does not operate a
+  centralized public developer portal, but its university library
+  (Universitätsbibliothek Freiburg) exposes several real, publicly reachable
+  programmatic interfaces. The FreiDok plus institutional repository offers a
+  JSON API and an OAI-PMH metadata-harvesting endpoint, and the FreiData
+  research-data repository (built on InvenioRDM) provides a REST API. These are
+  open, unauthenticated read endpoints intended for metadata harvesting and
+  discovery rather than a formal developer program.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/university-of-freiburg/refs/heads/main/apis.yml
+tags:
+  - Education
+  - Higher Education
+  - University
+  - Research
+  - Open Data
+  - Library
+  - Germany
+created: '2026-06-03'
+modified: '2026-06-03'
+specificationVersion: '0.19'
+apis:
+  - aid: university-of-freiburg:freidok-json
+    name: FreiDok plus JSON API
+    description: >-
+      Read-only JSON API for the FreiDok plus institutional repository and
+      university bibliography, returning publication and research-data metadata
+      records. Supports pagination via startitem/maxitems parameters (max 100
+      items per request). Confirmed live returning ~265k publication records.
+    humanURL: https://freidok.uni-freiburg.de/_/site/about
+    baseURL: https://freidok.uni-freiburg.de/jsonApi/v1/
+    tags: [ Research, Repository, Bibliography, Open Data, JSON ]
+    properties:
+      - type: Documentation
+        url: https://freidok.uni-freiburg.de/_/site/about
+      - type: SourceCode
+        url: https://pypi.org/project/freidok-cli/
+  - aid: university-of-freiburg:freidok-oai
+    name: FreiDok plus OAI-PMH
+    description: >-
+      OAI-PMH 2.0 metadata-harvesting endpoint for the FreiDok plus repository.
+      Supports multiple metadata formats including oai_dc, marcxml,
+      xMetaDissPlus, opusButton, and epicur. Used by aggregators such as BASE
+      and bwScienceToShare to harvest the university's research metadata.
+    humanURL: https://www.ub.uni-freiburg.de/en/open-science/open-access/freidok/
+    baseURL: https://freidok.uni-freiburg.de/oai/oai2.php
+    tags: [ OAI-PMH, Metadata Harvesting, Research, Repository ]
+    properties:
+      - type: Documentation
+        url: https://freidok.uni-freiburg.de/oai/oai2.php?verb=Identify
+  - aid: university-of-freiburg:freidata-rest
+    name: FreiData InvenioRDM REST API
+    description: >-
+      REST API for the FreiData research-data repository, the university's
+      InvenioRDM-based platform for publishing and discovering research
+      datasets. Exposes a records search and retrieval API returning JSON,
+      including DOI, file, and metadata links.
+    humanURL: https://freidata.uni-freiburg.de/
+    baseURL: https://freidata.uni-freiburg.de/api/
+    tags: [ Research Data, Repository, InvenioRDM, REST, Open Data ]
+    properties:
+      - type: Documentation
+        url: https://freidata.uni-freiburg.de/
+common:
+  - type: Website
+    url: https://www.uni-freiburg.de/
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/albert-ludwigs-universitaet-freiburg/
+  - type: Plans
+    url: plans/university-of-freiburg-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/university-of-freiburg-rate-limits.yml
+  - type: FinOps
+    url: finops/university-of-freiburg-finops.yml
+  - type: Review
+    url: review.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

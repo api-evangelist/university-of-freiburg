@@ -1,0 +1,41 @@
+---
+name: University of Freiburg
+description: University of Freiburg public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/university-of-freiburg/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 3
+    summary: >-
+      No centralized developer portal exists. Three real, publicly reachable
+      read APIs were verified live, all operated by the university library: the
+      FreiDok plus JSON API (returned ~265k publication records), the FreiDok
+      plus OAI-PMH endpoint (responded to Identify), and the FreiData
+      InvenioRDM REST API (returned JSON records). No official University of
+      Freiburg GitHub org was found — the github.com/uni-freiburg org is an
+      unofficial student account with zero repos and an explicit disclaimer, so
+      it was deliberately excluded. No fabricated endpoints; all baseURLs probed
+      with curl.
+    endpoints:
+      - url: https://freidok.uni-freiburg.de/jsonApi/v1/publications?maxitems=1
+        status: 200
+        note: FreiDok plus JSON API; returned numFound 265519 publication records.
+      - url: https://freidok.uni-freiburg.de/oai/oai2.php?verb=Identify
+        status: 200
+        note: FreiDok plus OAI-PMH endpoint; responds to OAI verbs.
+      - url: https://freidata.uni-freiburg.de/api/records?size=1
+        status: 200
+        note: FreiData InvenioRDM REST API; returned JSON record hits.
+      - url: https://www.uni-freiburg.de/
+        status: 200
+        note: Official university website.
+      - url: https://www.ub.uni-freiburg.de/en/open-science/open-access/freidok/
+        status: 200
+        note: Library FreiDok plus open-access documentation page.
+      - url: https://www.linkedin.com/school/albert-ludwigs-universitaet-freiburg/
+        status: 999
+        note: Official LinkedIn school page; 999 is LinkedIn anti-bot, page exists.
+      - url: https://github.com/uni-freiburg
+        status: 200
+        note: Unofficial student org, no repos, explicit disclaimer; excluded from catalog.
