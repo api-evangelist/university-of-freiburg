@@ -1,0 +1,44 @@
+{
+  "@context": {
+    "schema": "https://schema.org/",
+    "ubfr": "https://www.uni-freiburg.de/ns#",
+    "CollegeOrUniversity": "schema:CollegeOrUniversity",
+    "name": "schema:name",
+    "alternateName": "schema:alternateName",
+    "url": "schema:url",
+    "description": "schema:description",
+    "foundingDate": "schema:foundingDate",
+    "address": "schema:address",
+    "Dataset": "schema:Dataset",
+    "WebAPI": "schema:WebAPI",
+    "doi": {
+      "@id": "schema:identifier",
+      "@type": "@id"
+    },
+    "publication": "schema:CreativeWork",
+    "publicationYear": "schema:datePublished",
+    "title": "schema:headline",
+    "creator": "schema:creator",
+    "person": "schema:Person",
+    "forename": "schema:givenName",
+    "surname": "schema:familyName",
+    "orcid": {
+      "@id": "schema:sameAs",
+      "@type": "@id"
+    },
+    "publisher": "schema:publisher",
+    "record": "ubfr:record",
+    "links": "ubfr:links",
+    "self": {
+      "@id": "ubfr:self",
+      "@type": "@id"
+    },
+    "files": "schema:associatedMedia"
+  },
+  "@type": "CollegeOrUniversity",
+  "name": "University of Freiburg",
+  "alternateName": "Albert-Ludwigs-Universität Freiburg",
+  "url": "https://www.uni-freiburg.de/",
+  "foundingDate": "1457",
+  "description": "Public research university in Freiburg im Breisgau, Germany, whose university library exposes FreiDok plus (JSON API and OAI-PMH) and FreiData (InvenioRDM REST API) for research metadata and dataset discovery."
+}
