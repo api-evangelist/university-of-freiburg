@@ -71,6 +71,10 @@ apis:
       - type: Documentation
         url: https://freidata.uni-freiburg.de/
 common:
+  - type: VulnerabilityDisclosure
+    url: security/university-of-freiburg-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/university-of-freiburg-domain-security.yml
   - type: Website
     url: https://www.uni-freiburg.de/
   - type: LinkedIn
