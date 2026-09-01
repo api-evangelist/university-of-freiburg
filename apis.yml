@@ -1,17 +1,26 @@
 ---
 aid: university-of-freiburg
 name: University of Freiburg
+x-type: university
+x-category: Public Research University
 description: >-
-  The University of Freiburg (Albert-Ludwigs-Universität Freiburg) is a public
-  research university in Freiburg im Breisgau, Germany, founded in 1457 and
-  ranked #212 in the QS World University Rankings 2025. It does not operate a
-  centralized public developer portal, but its university library
-  (Universitätsbibliothek Freiburg) exposes several real, publicly reachable
-  programmatic interfaces. The FreiDok plus institutional repository offers a
-  JSON API and an OAI-PMH metadata-harvesting endpoint, and the FreiData
-  research-data repository (built on InvenioRDM) provides a REST API. These are
-  open, unauthenticated read endpoints intended for metadata harvesting and
-  discovery rather than a formal developer program.
+  The University of Freiburg (Albert-Ludwigs-Universität Freiburg) is a public research
+  university in Baden-Württemberg, Germany, founded in 1457, a member of the German U15 and
+  ranked #212 in the QS World University Rankings 2025. Like most universities it operates no
+  central developer portal, publishes no OpenAPI description of anything, and offers no API
+  program, keys, plans or support channel for developers — but unlike most of the cohort a
+  meaningful part of what it does run is genuinely its own rather than a vendor contract
+  wearing its name. Its library (Universitätsbibliothek Freiburg) operates FreiDok plus, an
+  institutional repository and university bibliography whose read-only JSON API and OAI-PMH 2.0
+  endpoint are open, anonymous and live (267,771 publications, 238,730 persons, 1,277
+  institutions and 10,612 projects as probed on 2026-09-01). The university also runs a
+  FreiData research-data repository (an InvenioRDM deployment minting DataCite DOIs under its
+  own prefix 10.60493), a self-hosted GitLab whose REST API answers anonymously for 56 public
+  projects, a public status page with a JSON monitor feed, and its own Shibboleth/SAML Identity
+  Provider published into the DFN-AAI national federation. Its library discovery catalog is
+  live but IP-blocked to automated clients, and its campus-management and LMS systems (HISinOne,
+  ILIAS) are human-facing only. Everything programmable here is read-only metadata infrastructure
+  built for harvesting, not a product; there is nothing to sign up for and nothing to buy.
 type: Index
 deliveryModel:
   model: saas
@@ -45,54 +54,225 @@ tags:
   - Higher Education
   - University
   - Research
+  - Research Data
   - Open Data
   - Library
+  - Repository
+  - OAI-PMH
+  - Identity Federation
   - Germany
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-09-01'
 specificationVersion: '0.23'
+x-coverage:
+  state: covered
+  reason: covered
+  detail: >-
+    Probed on 2026-09-01 with a browser user-agent. Six institution-operated machine-readable
+    surfaces were verified live under uni-freiburg.de, one identity-federation surface and two
+    registry memberships were evidenced, and every pointer in this file was re-fetched. The
+    footprint is real but narrow: it is research-metadata and infrastructure plumbing, with no
+    developer program, no authentication, no published contract of the institution's own, and
+    two of the live surfaces (GitLab, the Uptime Kuma status feed) are off-the-shelf products
+    the university merely hosts — their contracts belong to those products, not to Freiburg, so
+    only the in-house FreiDok plus API is described by an OpenAPI here. One surface is
+    unreadable: katalog.ub.uni-freiburg.de returns 403 with an explicit IP-range bot block. No
+    vendor contract has been attributed to the institution, and no contract is saved for any
+    surface the institution did not itself build.
+  evidence:
+    - url: https://freidok.uni-freiburg.de/jsonApi/v1/publications?maxRows=1
+      status: 200
+    - url: https://freidok.uni-freiburg.de/oai/oai2.php?verb=Identify
+      status: 200
+    - url: https://freidata.uni-freiburg.de/api/records?size=1
+      status: 200
+    - url: https://freidata.uni-freiburg.de/oai2d?verb=Identify
+      status: 200
+    - url: https://gitlab.uni-freiburg.de/api/v4/projects?per_page=1
+      status: 200
+    - url: https://status.uni-freiburg.de/api/status-page/ufr-services
+      status: 200
+    - url: https://mylogin.uni-freiburg.de/idp/shibboleth
+      status: 200
+    - url: https://api.datacite.org/providers/qvvc
+      status: 200
+    - url: https://katalog.ub.uni-freiburg.de/
+      status: 403
+    - url: https://uni-freiburg.de/llms.txt
+      status: 404
+    - url: https://uni-freiburg.de/.well-known/apis.json
+      status: 404
 apis:
   - aid: university-of-freiburg:freidok-json
     name: FreiDok plus JSON API
+    x-operator: institution
     description: >-
-      Read-only JSON API for the FreiDok plus institutional repository and
-      university bibliography, returning publication and research-data metadata
-      records. Supports pagination via startitem/maxitems parameters (max 100
-      items per request). Confirmed live returning ~265k publication records.
-    humanURL: https://freidok.uni-freiburg.de/_/site/about
+      Read-only JSON API for FreiDok plus, the institutional repository and university
+      bibliography built and operated by the Universitätsbibliothek Freiburg on the
+      university's own host. Four anonymous collection endpoints — publications, persons,
+      institutions, projects — return a shared numFound/start/maxRows/docs envelope. Probed
+      2026-09-01: 267,771 publications. Pagination is maxRows (1-100, default 20) and start;
+      the startitem/maxitems parameters named in earlier descriptions of this API were probed
+      and are silently ignored by the server.
+    humanURL: https://freidok.uni-freiburg.de/_/site/interfaces
     baseURL: https://freidok.uni-freiburg.de/jsonApi/v1/
     tags: [ Research, Repository, Bibliography, Open Data, JSON ]
     properties:
+      - type: OpenAPI
+        url: openapi/university-of-freiburg-freidok-plus-json-api-openapi.yml
+      - type: JSONSchema
+        url: json-schema/university-of-freiburg-freidok-plus-response-schema.json
+      - type: Examples
+        url: examples/university-of-freiburg-freidok-plus-publications-example.json
+      - type: Errors
+        url: errors/university-of-freiburg-freidok-plus-errors.yml
+      - type: Authentication
+        url: authentication/university-of-freiburg-authentication.yml
+      - type: Lifecycle
+        url: lifecycle/university-of-freiburg-freidok-plus-lifecycle.yml
       - type: Documentation
         url: https://freidok.uni-freiburg.de/_/site/about
       - type: SourceCode
         url: https://pypi.org/project/freidok-cli/
   - aid: university-of-freiburg:freidok-oai
     name: FreiDok plus OAI-PMH
+    x-operator: institution
     description: >-
-      OAI-PMH 2.0 metadata-harvesting endpoint for the FreiDok plus repository.
-      Supports multiple metadata formats including oai_dc, marcxml,
-      xMetaDissPlus, opusButton, and epicur. Used by aggregators such as BASE
-      and bwScienceToShare to harvest the university's research metadata.
-    humanURL: https://www.ub.uni-freiburg.de/en/open-science/open-access/freidok/
+      OAI-PMH 2.0 metadata-harvesting endpoint for FreiDok plus, on the university's own host.
+      Identify (probed 2026-09-01) reports repositoryName "FreiDok plus", repositoryIdentifier
+      freidok.uni-freiburg.de and earliestDatestamp 2015-04-29. Serves oai_dc, marcxml,
+      xMetaDissPlus, opusButton and epicur, and is harvested by aggregators such as BASE and
+      bwScienceToShare.
+    humanURL: https://freidok.uni-freiburg.de/
     baseURL: https://freidok.uni-freiburg.de/oai/oai2.php
     tags: [ OAI-PMH, Metadata Harvesting, Research, Repository ]
     properties:
       - type: Documentation
         url: https://freidok.uni-freiburg.de/oai/oai2.php?verb=Identify
+      - type: Conformance
+        url: conformance/university-of-freiburg-education-domain-standards.yml
   - aid: university-of-freiburg:freidata-rest
-    name: FreiData InvenioRDM REST API
+    name: FreiData research-data repository REST API
+    x-operator: institution
     description: >-
-      REST API for the FreiData research-data repository, the university's
-      InvenioRDM-based platform for publishing and discovering research
-      datasets. Exposes a records search and retrieval API returning JSON,
-      including DOI, file, and metadata links.
+      REST API of FreiData, the university's research-data repository, deployed and operated on
+      its own host at freidata.uni-freiburg.de. Anonymous read of records, files and IIIF
+      manifests; records mint DataCite DOIs under the university's own prefix 10.60493. The
+      software is InvenioRDM and the API contract is InvenioRDM's, not the university's — the
+      deployment and the data are Freiburg's, the specification belongs upstream, so no
+      contract is saved here for it.
     humanURL: https://freidata.uni-freiburg.de/
-    baseURL: https://freidata.uni-freiburg.de/api/
+    baseURL: https://freidata.uni-freiburg.de/api/records
     tags: [ Research Data, Repository, InvenioRDM, REST, Open Data ]
+    x-software: InvenioRDM
     properties:
       - type: Documentation
         url: https://freidata.uni-freiburg.de/
+      - type: Authentication
+        url: authentication/university-of-freiburg-authentication.yml
+  - aid: university-of-freiburg:freidata-oai
+    name: FreiData OAI-PMH
+    x-operator: institution
+    description: >-
+      Second OAI-PMH 2.0 endpoint, on the FreiData research-data host, serving marcxml, oai_dc,
+      dcat, marc21, datacite, oai_datacite, datacite4 and oai_datacite4. Identify returns the
+      InvenioRDM product defaults (repositoryName "InvenioRDM", adminEmail
+      info@inveniosoftware.org) — the endpoint is the university's, the identity strings are the
+      software's, unedited.
+    humanURL: https://freidata.uni-freiburg.de/
+    baseURL: https://freidata.uni-freiburg.de/oai2d
+    tags: [ OAI-PMH, Metadata Harvesting, Research Data, DataCite ]
+    x-software: InvenioRDM
+    properties:
+      - type: Documentation
+        url: https://freidata.uni-freiburg.de/oai2d?verb=Identify
+      - type: Conformance
+        url: conformance/university-of-freiburg-education-domain-standards.yml
+  - aid: university-of-freiburg:gitlab
+    name: University of Freiburg GitLab REST API
+    x-operator: institution
+    description: >-
+      Self-hosted GitLab operated by the university's computing centre. The v4 REST API answers
+      anonymous requests for public resources — probed 2026-09-01, GET /api/v4/projects returned
+      56 public projects with rate-limit headers (ratelimit-limit 60, throttle_unauthenticated_api);
+      /api/v4/metadata returns 401 without a token. The instance is the university's; the API
+      contract is GitLab's product contract and is deliberately not saved under this institution.
+    humanURL: https://gitlab.uni-freiburg.de/explore/projects
+    baseURL: https://gitlab.uni-freiburg.de/api/v4/projects
+    tags: [ Source Code, Developer Tooling, Research Software ]
+    x-software: GitLab
+    properties:
+      - type: Authentication
+        url: authentication/university-of-freiburg-authentication.yml
+  - aid: university-of-freiburg:status-api
+    name: Uni-Freiburg Services status API
+    x-operator: institution
+    description: >-
+      Public status page for central university services, with a JSON API — /api/status-page/ufr-services
+      returns the monitor configuration and /api/status-page/heartbeat/ufr-services returns
+      per-monitor heartbeat history with ping times. Operated by the university on its own host;
+      the software is Uptime Kuma and its contract is the product's, so none is saved here.
+    humanURL: https://status.uni-freiburg.de/status/ufr-services
+    baseURL: https://status.uni-freiburg.de/api/status-page/ufr-services
+    tags: [ Status, Operational Transparency, Monitoring ]
+    x-software: Uptime Kuma
+    properties:
+      - type: Documentation
+        url: https://status.uni-freiburg.de/status/ufr-services
+  - aid: university-of-freiburg:shibboleth-idp
+    name: myLogin Shibboleth Identity Provider (SAML 2.0 metadata)
+    x-operator: federation
+    description: >-
+      The university's own Shibboleth Identity Provider, myLogin, operated by the
+      Universitätsrechenzentrum. Its SAML 2.0 metadata is published on the university's host
+      (entityID https://mylogin.uni-freiburg.de/shibboleth, OrganizationDisplayName
+      "Albert-Ludwigs-Universität Freiburg", scope uni-freiburg.de) and is carried in the signed
+      DFN-AAI production IdP aggregate, which feeds eduGAIN. A federation is shared by
+      definition; the IdP behind this entry is the institution's own.
+    humanURL: https://rz.uni-freiburg.de/
+    baseURL: https://mylogin.uni-freiburg.de/idp/shibboleth
+    tags: [ Identity, Federation, Shibboleth, SAML, Single Sign-On ]
+    properties:
+      - type: Metadata
+        url: https://mylogin.uni-freiburg.de/idp/shibboleth
+      - type: FederationMetadata
+        url: https://www.aai.dfn.de/metadata/dfn-aai-idp-metadata.xml
+      - type: Conformance
+        url: conformance/university-of-freiburg-education-domain-standards.yml
+  - aid: university-of-freiburg:datacite-membership
+    name: DataCite membership and repository registration
+    x-operator: registry
+    description: >-
+      The University of Freiburg is a DataCite member (symbol QVVC, country DE, consortium
+      organization under the TIB consortium, rorId https://ror.org/0245cg223) and operates the
+      registered repository client QVVC.FREIDATA for freidata.uni-freiburg.de, holding DOI
+      prefix 10.60493. This is a membership fact about the institution recorded in a shared
+      registry, not a contract of theirs — DataCite's API belongs to DataCite.
+    humanURL: https://api.datacite.org/providers/qvvc
+    baseURL: https://api.datacite.org/
+    tags: [ DOI, DataCite, Persistent Identifiers, Research Data ]
+    x-registry-id: QVVC
+    properties:
+      - type: RegistryRecord
+        url: https://api.datacite.org/providers/qvvc
+      - type: RepositoryRecord
+        url: https://api.datacite.org/clients/qvvc.freidata
+      - type: Conformance
+        url: conformance/university-of-freiburg-education-domain-standards.yml
+  - aid: university-of-freiburg:ror-record
+    name: ROR organization identifier
+    x-operator: registry
+    description: >-
+      The institution's Research Organization Registry identifier, https://ror.org/0245cg223,
+      carrying its names in German and English and its website. Recorded as a registry
+      membership; the ROR API is ROR's, not the university's.
+    humanURL: https://ror.org/0245cg223
+    baseURL: https://api.ror.org/v2/organizations/
+    tags: [ Persistent Identifiers, Organization Identifier, ROR ]
+    x-registry-id: https://ror.org/0245cg223
+    properties:
+      - type: RegistryRecord
+        url: https://ror.org/0245cg223
 common:
   - type: VulnerabilityDisclosure
     url: security/university-of-freiburg-vulnerability-disclosure.yml
@@ -110,6 +290,28 @@ common:
     url: finops/university-of-freiburg-finops.yml
   - type: Review
     url: review.yml
+  - type: ResearchRepository
+    url: https://freidok.uni-freiburg.de/
+  - type: OpenData
+    url: https://freidata.uni-freiburg.de/
+  - type: LibraryCatalog
+    url: https://www.ub.uni-freiburg.de/
+  - type: CourseCatalog
+    url: https://campus.uni-freiburg.de/qisserver/pages/cs/sys/portal/subMenu.faces?navigationPosition=studiesOffered
+  - type: IdentityFederation
+    url: https://mylogin.uni-freiburg.de/idp/shibboleth
+  - type: ResearchComputing
+    url: https://www.nemo.uni-freiburg.de/
+  - type: AIPolicy
+    url: https://uni-freiburg.de/forschung/qualitaetssicherung/gute-wissenschaftliche-praxis/policy-zum-umgang-mit-generativer-ki-in-der-forschung/
+  - type: Status
+    url: https://status.uni-freiburg.de/status/ufr-services
+  - type: SourceCode
+    url: https://gitlab.uni-freiburg.de/explore/projects
+  - type: PrivacyPolicy
+    url: https://uni-freiburg.de/datenschutzerklaerung/
+  - type: SecurityTxt
+    url: https://uni-freiburg.de/.well-known/security.txt
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
