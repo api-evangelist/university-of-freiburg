@@ -220,6 +220,12 @@ apis:
   - Federation
   - Shibboleth
   - SAML
+  - SSO
+  tags_raw:
+  - Identity
+  - Federation
+  - Shibboleth
+  - SAML
   - Single Sign-On
   properties:
   - type: Metadata
@@ -275,6 +281,8 @@ apis:
   humanURL: https://freidok.uni-freiburg.de/_/site/interfaces
   baseURL: https://freidok.uni-freiburg.de/jsonApi/v1/
   tags:
+  - Institutions
+  tags_raw:
   - institutions
   properties:
   - type: OpenAPI
@@ -299,6 +307,8 @@ apis:
   humanURL: https://freidok.uni-freiburg.de/_/site/interfaces
   baseURL: https://freidok.uni-freiburg.de/jsonApi/v1/
   tags:
+  - Persons
+  tags_raw:
   - persons
   properties:
   - type: OpenAPI
@@ -323,6 +333,8 @@ apis:
   humanURL: https://freidok.uni-freiburg.de/_/site/interfaces
   baseURL: https://freidok.uni-freiburg.de/jsonApi/v1/
   tags:
+  - Project
+  tags_raw:
   - projects
   properties:
   - type: OpenAPI
@@ -347,6 +359,8 @@ apis:
   humanURL: https://freidok.uni-freiburg.de/_/site/interfaces
   baseURL: https://freidok.uni-freiburg.de/jsonApi/v1/
   tags:
+  - Publications
+  tags_raw:
   - publications
   properties:
   - type: OpenAPI
