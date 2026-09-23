@@ -1,0 +1,55 @@
+---
+name: University of Freiburg — authentication posture across public surfaces
+generated: '2026-09-01'
+method: probed
+source: >-
+  Live probes on 2026-09-01 of each host listed below. No credentials of any kind were used or
+  attempted; every result is what an anonymous public client receives.
+surfaces:
+  - surface: FreiDok plus JSON API
+    url: https://freidok.uni-freiburg.de/jsonApi/v1/publications
+    x-operator: institution
+    auth: none
+    evidence: 'GET without any header returned HTTP 200 and 267,771 records (numFound).'
+    notes: No API key, no registration, no quota documented, no auth-related response headers.
+  - surface: FreiDok plus OAI-PMH
+    url: https://freidok.uni-freiburg.de/oai/oai2.php?verb=Identify
+    x-operator: institution
+    auth: none
+    evidence: 'GET returned HTTP 200 OAI-PMH 2.0 Identify response.'
+  - surface: FreiData REST API (InvenioRDM deployment)
+    url: https://freidata.uni-freiburg.de/api/records
+    x-operator: institution
+    auth: none for read
+    evidence: 'GET ?size=1 returned HTTP 200 with record hits, DOIs and file links.'
+    notes: >-
+      Write operations in InvenioRDM require a token; no token issuance process was found on the
+      public surface, so writing is treated as not publicly available.
+  - surface: University of Freiburg GitLab REST API v4
+    url: https://gitlab.uni-freiburg.de/api/v4/projects
+    x-operator: institution
+    auth: none for public projects; token required otherwise
+    evidence: >-
+      GET returned HTTP 200 listing 56 public projects (x-total: 56) with rate-limit headers
+      ratelimit-limit 60 / ratelimit-name throttle_unauthenticated_api. GET /api/v4/metadata
+      returned HTTP 401 {"message":"401 Unauthorized"}.
+  - surface: Uni-Freiburg Services status page API
+    url: https://status.uni-freiburg.de/api/status-page/ufr-services
+    x-operator: institution
+    auth: none
+    evidence: 'GET returned HTTP 200 application/json config + monitor list; /metrics returned 401.'
+  - surface: myLogin Shibboleth Identity Provider (SAML 2.0)
+    url: https://mylogin.uni-freiburg.de/idp/shibboleth
+    x-operator: federation
+    auth: 'metadata is public; the IdP itself authenticates university accounts'
+    evidence: >-
+      GET returned HTTP 200 application/xml SAML 2.0 EntityDescriptor,
+      entityID https://mylogin.uni-freiburg.de/shibboleth,
+      OrganizationDisplayName "Albert-Ludwigs-Universität Freiburg".
+  - surface: Katalog plus library discovery
+    url: https://katalog.ub.uni-freiburg.de/
+    x-operator: institution
+    auth: not determinable
+    evidence: >-
+      HTTP 403 "Access Denied — Der Zugang von Ihrer IP-Adresse ... aufgrund von Bot-Aktivitäten
+      ... gesperrt". Live but blocked to our client; no conclusion drawn about any API behind it.

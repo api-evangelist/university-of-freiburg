@@ -3,8 +3,85 @@ name: University of Freiburg
 description: University of Freiburg public developer/API footprint review for APIs.json cataloging.
 url: https://raw.githubusercontent.com/api-evangelist/university-of-freiburg/refs/heads/main/review.yml
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-09-01'
 reviews:
+  - date: '2026-09-01'
+    rating: 4
+    summary: >-
+      University pipeline re-profile with operator attribution. No vendor contract was ever
+      attributed to this institution (the audit verdict counts were institution:3, no tenant,
+      CNAME, hostless, shared-contract or misbased findings), so nothing had to be removed —
+      the work was finding the surfaces the June 2026 pass missed. Six institution-operated
+      machine-readable surfaces are live: the FreiDok plus JSON API and its OAI-PMH endpoint,
+      the FreiData REST API and a second OAI-PMH endpoint, a self-hosted GitLab whose v4 API
+      answers anonymously (56 public projects), and an Uptime Kuma status page with a JSON
+      monitor/heartbeat feed. Newly found beyond those: the university's own Shibboleth/SAML
+      Identity Provider (myLogin), published on its own host and carried in the signed DFN-AAI
+      federation aggregate, plus DataCite membership (QVVC, repository QVVC.FREIDATA, DOI
+      prefix 10.60493) and a ROR identifier. Only FreiDok plus is the institution's own
+      engineering, so it is the only surface with a saved contract — a probed OpenAPI, JSON
+      Schema, four unmodified example payloads, an error artifact and a lifecycle artifact.
+      InvenioRDM, GitLab and Uptime Kuma contracts were deliberately NOT saved. Correction to
+      the June profile: the FreiDok API's documented startitem/maxitems parameters do not work;
+      the server honours maxRows (1-100) and start.
+    endpoints:
+      - url: https://freidok.uni-freiburg.de/jsonApi/v1/publications?maxRows=1
+        status: 200
+        note: numFound 267771. Author records carry validated ORCID iDs and GND links.
+      - url: https://freidok.uni-freiburg.de/jsonApi/v1/persons?maxRows=1
+        status: 200
+        note: numFound 238730.
+      - url: https://freidok.uni-freiburg.de/jsonApi/v1/institutions?maxRows=1
+        status: 200
+        note: numFound 1277.
+      - url: https://freidok.uni-freiburg.de/jsonApi/v1/projects?maxRows=1
+        status: 200
+        note: numFound 10612.
+      - url: https://freidok.uni-freiburg.de/jsonApi/v1/publications?maxRows=101
+        status: 400
+        note: 'errorMsg "invalid value for maxRows (1-100)" — the API''s only documented constraint.'
+      - url: https://freidok.uni-freiburg.de/oai/oai2.php?verb=ListMetadataFormats
+        status: 200
+        note: oai_dc, marcxml, xMetaDissPlus, opusButton, epicur.
+      - url: https://freidata.uni-freiburg.de/oai2d?verb=Identify
+        status: 200
+        note: >-
+          Second OAI-PMH endpoint; repositoryName and adminEmail are unedited InvenioRDM
+          product defaults on the university's host.
+      - url: https://gitlab.uni-freiburg.de/api/v4/projects?per_page=1
+        status: 200
+        note: 'x-total 56 public projects; ratelimit-limit 60 (throttle_unauthenticated_api).'
+      - url: https://status.uni-freiburg.de/api/status-page/heartbeat/ufr-services
+        status: 200
+        note: Public JSON heartbeat feed for central university services.
+      - url: https://mylogin.uni-freiburg.de/idp/shibboleth
+        status: 200
+        note: >-
+          SAML 2.0 EntityDescriptor, entityID https://mylogin.uni-freiburg.de/shibboleth,
+          OrganizationDisplayName "Albert-Ludwigs-Universität Freiburg".
+      - url: https://www.aai.dfn.de/metadata/dfn-aai-idp-metadata.xml
+        status: 200
+        note: Same entityID present in the signed DFN-AAI production IdP aggregate.
+      - url: https://api.datacite.org/providers/qvvc
+        status: 200
+        note: 'DataCite member "University of Freiburg", rorId https://ror.org/0245cg223.'
+      - url: https://katalog.ub.uni-freiburg.de/
+        status: 403
+        note: >-
+          Katalog plus discovery — explicit IP-range bot block ("Zugang ... aufgrund von
+          Bot-Aktivitäten ... gesperrt"). Live but unreadable to us; no API claimed.
+      - url: https://ilias.uni-freiburg.de/lti.php
+        status: 403
+        note: ILIAS LMS; LTI/SOAP paths refuse anonymous clients, so no LTI conformance claimed.
+      - url: https://uni-freiburg.de/.well-known/security.txt
+        status: 200
+        note: 'Contact mailto:security@uni-freiburg.de; institution-operated well-known file.'
+      - url: https://api.crossref.org/members?query=freiburg
+        status: 200
+        note: No Crossref member record; DOI registration runs through DataCite only.
+      - url: https://uni-freiburg.de/llms.txt
+        status: 404
+        note: No llms.txt, no .well-known/apis.json, no agent card.
   - date: '2026-06-03'
     rating: 3
     summary: >-

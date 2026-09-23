@@ -1,0 +1,50 @@
+---
+name: FreiDok plus JSON API — error semantics
+generated: '2026-09-01'
+method: probed
+source: >-
+  Live probes of https://freidok.uni-freiburg.de/jsonApi/v1/ on 2026-09-01. The University of
+  Freiburg publishes no error documentation for this API; every envelope below is an unmodified
+  response body captured with curl.
+x-operator: institution
+envelope:
+  description: >-
+    Errors are returned as JSON with the same three keys on every failure, and the HTTP status
+    code matches the statusCode field. errorCode was 0 in every observed error.
+  shape:
+    statusCode: integer
+    errorCode: integer
+    errorMsg: string
+  content_type: application/json
+errors:
+  - condition: Page size outside the accepted range
+    request: GET /jsonApi/v1/publications?maxRows=101
+    http_status: 400
+    body:
+      statusCode: 400
+      errorCode: 0
+      errorMsg: invalid value for maxRows (1-100)
+    note: Same body for maxRows=200. maxRows=0 is accepted (200, empty docs, full numFound).
+  - condition: Unknown action / collection segment
+    request: GET /jsonApi/v1/nonexistent
+    http_status: 404
+    body:
+      statusCode: 404
+      errorCode: 0
+      errorMsg: Das System konnte die angeforderte Action "nonexistent" nicht finden.
+    note: Message is German only.
+  - condition: Path with an unsupported extra segment (no per-record GET)
+    request: GET /jsonApi/v1/publications/271690
+    http_status: 404
+    body:
+      statusCode: 404
+      errorCode: 0
+      errorMsg: 'Konnte den Request "jsonApi/v1/publications/271690" nicht auflösen.'
+    note: >-
+      There is no single-record endpoint. A record is retrieved by filtering a collection, or
+      through the HTML/landing URL in each record's link field (https://freidok.uni-freiburg.de/data/<id>).
+observations:
+  - Unrecognised query parameters are ignored silently rather than rejected — startitem and
+    maxitems (named in third-party descriptions of this API) returned 200 with server defaults.
+  - No RFC 7807 / problem+json usage; no error type URIs; no machine-readable error codes
+    beyond the constant 0.

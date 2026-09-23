@@ -1,0 +1,40 @@
+{
+  "generated": "2026-09-01",
+  "method": "probed",
+  "source": "https://freidok.uni-freiburg.de/jsonApi/v1/projects?maxRows=1",
+  "x-operator": "institution",
+  "note": "Unmodified live response captured 2026-09-01.",
+  "request": {
+    "method": "GET",
+    "url": "https://freidok.uni-freiburg.de/jsonApi/v1/projects?maxRows=1"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": {
+      "numFound": 10612,
+      "start": 0,
+      "maxRows": 1,
+      "type": "project",
+      "lang": "de",
+      "docs": [
+        {
+          "id": 11076,
+          "link": "https://freidok.uni-freiburg.de/proj/11076",
+          "names": [
+            {
+              "language": "ger",
+              "language_value": "deutsch",
+              "value": "Koordinationsfonds der FOR 5381 (2. Förderperiode)"
+            }
+          ],
+          "runtime": {
+            "from": "2026-10-01",
+            "until": "",
+            "value": "01.10.2026 - "
+          }
+        }
+      ]
+    }
+  }
+}

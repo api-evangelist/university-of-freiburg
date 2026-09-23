@@ -4,7 +4,7 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: University of Freiburg
 providerId: university-of-freiburg
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-09-01'
 reconciled: false
 tags:
 - Education
@@ -22,6 +22,27 @@ sources:
 responseCodes:
   throttled: 429
 limits:
+- name: GitLab unauthenticated API (probed)
+  scope: client
+  metric: requests-per-minute
+  limit: 60
+  notes: >-
+    Observed 2026-09-01 on https://gitlab.uni-freiburg.de/api/v4/projects — response headers
+    ratelimit-limit 60, ratelimit-name throttle_unauthenticated_api, ratelimit-remaining and
+    ratelimit-reset. This is the only numeric rate limit any University of Freiburg surface
+    exposes, and it is GitLab's default throttle rather than a published institutional policy.
+  method: probed
+  source: https://gitlab.uni-freiburg.de/api/v4/projects
+- name: FreiDok plus JSON API page size (probed)
+  scope: request
+  metric: records-per-request
+  limit: 100
+  notes: >-
+    Observed 2026-09-01 — maxRows accepts 1-100; 101 and 200 return HTTP 400
+    {"statusCode":400,"errorCode":0,"errorMsg":"invalid value for maxRows (1-100)"}. No
+    per-minute or per-day quota was returned in any header, and no 429 was observed.
+  method: probed
+  source: https://freidok.uni-freiburg.de/jsonApi/v1/publications?maxRows=101
 - name: Default
   scope: client
   metric: requests-per-minute

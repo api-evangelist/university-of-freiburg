@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/university-of-freiburg/main/json-schema/university-of-freiburg-freidok-plus-response-schema.json",
+  "title": "FreiDok plus JSON API response envelope",
+  "description": "Schema derived from live responses of https://freidok.uni-freiburg.de/jsonApi/v1/ observed on 2026-09-01. The University of Freiburg publishes no schema for this API; every property below was present in an actual response body. Optional fields are marked optional because they were absent from at least one observed record.",
+  "generated": "2026-09-01",
+  "method": "derived",
+  "source": "Derived from probed responses of /publications, /persons, /institutions and /projects on https://freidok.uni-freiburg.de/jsonApi/v1/ (2026-09-01)",
+  "x-operator": "institution",
+  "type": "object",
+  "required": ["numFound", "start", "maxRows", "type", "lang", "docs"],
+  "properties": {
+    "numFound": { "type": "integer" },
+    "start": { "type": "integer" },
+    "maxRows": { "type": "integer" },
+    "type": { "type": "string", "enum": ["publication", "person", "institution", "project"] },
+    "lang": { "type": "string" },
+    "docs": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          { "$ref": "#/$defs/publication" },
+          { "$ref": "#/$defs/person" },
+          { "$ref": "#/$defs/institution" },
+          { "$ref": "#/$defs/project" }
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "localizedValue": {
+      "type": "object",
+      "properties": {
+        "language": { "type": "string", "description": "ISO 639-2 code, e.g. ger, eng" },
+        "language_value": { "type": "string" },
+        "value": { "type": "string" }
+      },
+      "required": ["value"]
+    },
+    "publication": {
+      "type": "object",
+      "required": ["id", "link"],
+      "properties": {
+        "id": { "type": "integer" },
+        "link": { "type": "string", "format": "uri" },
+        "publication_year": { "type": "object", "properties": { "value": { "type": ["integer", "string"] } } },
+        "publication_date": { "type": "object", "properties": { "value": { "type": "string" } } },
+        "titles": { "type": "array", "items": { "$ref": "#/$defs/localizedValue" } },
+        "publisher": { "type": "object", "properties": { "place": { "type": "string" }, "value": { "type": "string" } } },
+        "persons": { "type": "array", "items": { "$ref": "#/$defs/publicationPerson" } }
+      }
+    },
+    "publicationPerson": {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string" },
+        "type_value": { "type": "string" },
+        "norm_id": { "type": "integer" },
+        "link": { "type": "string", "format": "uri" },
+        "is_corresponding_author": { "type": "boolean" },
+        "affiliations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "norm_id": { "type": "integer" },
+              "value": { "type": "string" },
+              "sup_no": { "type": ["integer", "string"] },
+              "link": { "type": "string", "format": "uri" },
+              "lifetime": { "type": "string" }
+            }
+          }
+        },
+        "author_function": { "type": "object" },
+        "gnd_link": { "type": "string", "format": "uri", "description": "GND authority record for the person" },
+        "orcid_link": { "type": "string", "format": "uri", "description": "ORCID iD of the person" },
+        "orcid_validated": { "type": "boolean", "description": "Whether the ORCID iD was validated by the operator" },
+        "forename": { "type": "string" },
+        "surname": { "type": "string" },
+        "value": { "type": "string" }
+      }
+    },
+    "person": {
+      "type": "object",
+      "required": ["id", "link"],
+      "properties": {
+        "id": { "type": "integer" },
+        "link": { "type": "string", "format": "uri" },
+        "names": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "forename": { "type": "string" },
+              "surname": { "type": "string" },
+              "value": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "institution": {
+      "type": "object",
+      "required": ["id", "link"],
+      "properties": {
+        "id": { "type": "integer" },
+        "link": { "type": "string", "format": "uri" },
+        "names": { "type": "array", "items": { "$ref": "#/$defs/localizedValue" } },
+        "lifetime": { "type": "object", "properties": { "from": { "type": "string" }, "until": { "type": "string" }, "value": { "type": "string" } } },
+        "directors": { "type": "array", "items": { "type": "object" } }
+      }
+    },
+    "project": {
+      "type": "object",
+      "required": ["id", "link"],
+      "properties": {
+        "id": { "type": "integer" },
+        "link": { "type": "string", "format": "uri" },
+        "names": { "type": "array", "items": { "$ref": "#/$defs/localizedValue" } },
+        "runtime": { "type": "object", "properties": { "from": { "type": "string" }, "until": { "type": "string" }, "value": { "type": "string" } } }
+      }
+    }
+  }
+}

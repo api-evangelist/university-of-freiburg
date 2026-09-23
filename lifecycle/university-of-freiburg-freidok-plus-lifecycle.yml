@@ -1,0 +1,29 @@
+---
+name: FreiDok plus JSON API — lifecycle signals
+generated: '2026-09-01'
+method: derived
+source: >-
+  Derived from URL structure and live probe results on 2026-09-01
+  (https://freidok.uni-freiburg.de/jsonApi/v1/ and the FreiDok OAI-PMH Identify response).
+  The University of Freiburg publishes no changelog, deprecation policy or versioning statement
+  for this API; everything below is inference from observable structure and is labelled as such.
+x-operator: institution
+versioning:
+  scheme: path
+  current: v1
+  evidence: 'Base path /jsonApi/v1/ carries an explicit major version segment.'
+  policy_published: false
+deprecation:
+  policy_published: false
+  sunset_header: not_observed
+  notes: 'No Sunset or Deprecation headers were returned on any probed response.'
+change_communication:
+  changelog: none_found
+  status_page: https://status.uni-freiburg.de/status/ufr-services
+  notes: >-
+    The university operates a public status page for central services; FreiDok plus was not
+    identified as a named monitor on it during this run.
+data_history:
+  earliest_record: '2015-04-29T00:00:00Z'
+  evidence: 'earliestDatestamp in the OAI-PMH Identify response of the same repository.'
+  deleted_record_support: 'no (OAI-PMH deletedRecord: no)'

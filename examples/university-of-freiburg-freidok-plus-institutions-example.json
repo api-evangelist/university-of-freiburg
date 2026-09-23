@@ -1,0 +1,79 @@
+{
+  "generated": "2026-09-01",
+  "method": "probed",
+  "source": "https://freidok.uni-freiburg.de/jsonApi/v1/institutions?maxRows=1",
+  "x-operator": "institution",
+  "note": "Unmodified live response captured 2026-09-01.",
+  "request": {
+    "method": "GET",
+    "url": "https://freidok.uni-freiburg.de/jsonApi/v1/institutions?maxRows=1"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": {
+      "numFound": 1277,
+      "start": 0,
+      "maxRows": 1,
+      "type": "institution",
+      "lang": "de",
+      "docs": [
+        {
+          "id": 1000,
+          "link": "https://freidok.uni-freiburg.de/inst/1000",
+          "names": [
+            {
+              "language": "ger",
+              "language_value": "deutsch",
+              "value": "Albert-Ludwigs-Universität Freiburg"
+            },
+            {
+              "language": "ger",
+              "language_value": "deutsch",
+              "value": "Universität Freiburg"
+            },
+            {
+              "language": "ger",
+              "language_value": "deutsch",
+              "value": "Uni Freiburg"
+            },
+            {
+              "language": "eng",
+              "language_value": "englisch",
+              "value": "University of Freiburg"
+            }
+          ],
+          "lifetime": {
+            "from": "1457",
+            "until": "",
+            "value": "1457 - "
+          },
+          "directors": [
+            {
+              "norm_id": 38391,
+              "value": "Saliterer, Iris",
+              "forename": "Iris",
+              "surname": "Saliterer",
+              "type": "direction",
+              "type_value": "Leitung",
+              "job": "Professor Public and Nonprofit Management",
+              "time_active": "01.01.2016 - ",
+              "link": "https://freidok.uni-freiburg.de/pers/38391"
+            },
+            {
+              "norm_id": 363715,
+              "value": "Klooster, Jacqueline",
+              "forename": "Jacqueline",
+              "surname": "Klooster",
+              "type": "direction",
+              "type_value": "Leitung",
+              "job": "Chair of Greek Philology",
+              "time_active": "01.10.2025 - ",
+              "link": "https://freidok.uni-freiburg.de/pers/363715"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

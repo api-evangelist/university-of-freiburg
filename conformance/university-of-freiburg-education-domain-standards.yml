@@ -1,0 +1,134 @@
+---
+name: University of Freiburg — education-regime domain standard conformance
+generated: '2026-09-01'
+method: probed
+source: >-
+  Live probes on 2026-09-01 against the university's own hosts and against the public registries
+  it is registered in. Each hit below names the exact URL and the exact field or response element
+  that evidences it. Standards with no evidence are listed as not_found rather than omitted, and
+  nothing here is inferred from a prose claim on a web page.
+regime: education
+standards_evaluated:
+  - scim
+  - lti
+  - oneroster
+  - ed-fi
+  - caliper
+  - qti
+  - oai-pmh
+  - shibboleth
+  - saml
+  - orcid
+  - datacite
+  - crossref
+conformance:
+  - standard: oai-pmh
+    status: conformant
+    x-operator: institution
+    evidence:
+      - url: https://freidok.uni-freiburg.de/oai/oai2.php?verb=Identify
+        status: 200
+        detail: >-
+          OAI-PMH 2.0 Identify response — repositoryName "FreiDok plus", protocolVersion 2.0,
+          repositoryIdentifier freidok.uni-freiburg.de, earliestDatestamp 2015-04-29T00:00:00Z,
+          granularity YYYY-MM-DDThh:mm:ssZ, adminEmail at ub.uni-freiburg.de.
+      - url: https://freidok.uni-freiburg.de/oai/oai2.php?verb=ListMetadataFormats
+        status: 200
+        detail: 'metadataPrefix values served: oai_dc, marcxml, xMetaDissPlus, opusButton, epicur.'
+      - url: https://freidata.uni-freiburg.de/oai2d?verb=Identify
+        status: 200
+        detail: >-
+          Second OAI-PMH 2.0 endpoint, on the FreiData research-data repository host.
+          repositoryName is the InvenioRDM product default ("InvenioRDM", adminEmail
+          info@inveniosoftware.org) — the deployment is the university's, the identity strings
+          are the software's unedited defaults.
+      - url: https://freidata.uni-freiburg.de/oai2d?verb=ListMetadataFormats
+        status: 200
+        detail: 'metadataPrefix values served: marcxml, oai_dc, dcat, marc21, datacite, oai_datacite, datacite4, oai_datacite4.'
+  - standard: shibboleth
+    status: conformant
+    x-operator: federation
+    evidence:
+      - url: https://mylogin.uni-freiburg.de/idp/shibboleth
+        status: 200
+        detail: >-
+          The university publishes its own Shibboleth Identity Provider metadata (20,169 bytes,
+          application/xml), entityID https://mylogin.uni-freiburg.de/shibboleth,
+          OrganizationDisplayName "Albert-Ludwigs-Universität Freiburg". Certificate subject
+          CN=mylogin.uni-freiburg.de, O=Albert-Ludwigs-Universitaet Freiburg.
+      - url: https://www.aai.dfn.de/metadata/dfn-aai-idp-metadata.xml
+        status: 200
+        detail: >-
+          The same entityID appears in the signed DFN-AAI (German national research and education
+          federation) production IdP metadata aggregate, with saml1md:Scope uni-freiburg.de and a
+          German/English mdui:Description of the myLogin service.
+  - standard: saml
+    status: conformant
+    x-operator: federation
+    evidence:
+      - url: https://mylogin.uni-freiburg.de/idp/shibboleth
+        status: 200
+        detail: >-
+          SAML 2.0 EntityDescriptor with protocolSupportEnumeration
+          urn:oasis:names:tc:SAML:2.0:protocol and SingleSignOnService bindings HTTP-POST,
+          HTTP-POST-SimpleSign, HTTP-Redirect and SOAP/ECP at mylogin.ub.uni-freiburg.de.
+  - standard: datacite
+    status: conformant
+    x-operator: registry
+    evidence:
+      - url: https://api.datacite.org/providers/qvvc
+        status: 200
+        detail: >-
+          DataCite member record — name "University of Freiburg", symbol QVVC, country DE,
+          memberType consortium_organization (TIB consortium), rorId https://ror.org/0245cg223,
+          website https://uni-freiburg.de/.
+      - url: https://api.datacite.org/clients/qvvc.freidata
+        status: 200
+        detail: >-
+          DataCite repository client "FreiDATA", symbol QVVC.FREIDATA, clientType repository,
+          domains freidata.uni-freiburg.de, active since 2023.
+      - url: https://api.datacite.org/prefixes/10.60493
+        status: 200
+        detail: 'DOI prefix 10.60493 is allocated to client qvvc.freidata / provider qvvc.'
+      - url: https://freidata.uni-freiburg.de/api/records?size=1
+        status: 200
+        detail: 'Live records mint DOIs under that prefix, e.g. https://doi.org/10.60493/xajxw-b2838.'
+  - standard: orcid
+    status: conformant
+    x-operator: institution
+    evidence:
+      - url: https://freidok.uni-freiburg.de/jsonApi/v1/publications?maxRows=1
+        status: 200
+        detail: >-
+          Author objects carry orcid_link (e.g. https://orcid.org/0000-0002-8084-5112) together
+          with an orcid_validated boolean, so the repository stores and exposes validated ORCID
+          iDs through its public API. GND authority links (gnd_link) are carried alongside.
+  - standard: crossref
+    status: not_found
+    evidence:
+      - url: https://api.crossref.org/members?query=freiburg&rows=10
+        status: 200
+        detail: 'No Crossref member record matched the institution; DOI registration runs through DataCite.'
+  - standard: scim
+    status: not_found
+    evidence: []
+  - standard: lti
+    status: not_found
+    evidence:
+      - url: https://ilias.uni-freiburg.de/lti.php
+        status: 403
+        detail: >-
+          The university runs ILIAS as its LMS, which supports LTI, but the LTI and SOAP service
+          paths return 403 to an anonymous client, so no conformance can be evidenced either way.
+  - standard: oneroster
+    status: not_found
+    evidence: []
+  - standard: ed-fi
+    status: not_found
+    evidence: []
+  - standard: caliper
+    status: not_found
+    evidence: []
+  - standard: qti
+    status: not_found
+    evidence: []

@@ -1,0 +1,35 @@
+{
+  "generated": "2026-09-01",
+  "method": "probed",
+  "source": "https://freidok.uni-freiburg.de/jsonApi/v1/persons?maxRows=1",
+  "x-operator": "institution",
+  "note": "Unmodified live response captured 2026-09-01.",
+  "request": {
+    "method": "GET",
+    "url": "https://freidok.uni-freiburg.de/jsonApi/v1/persons?maxRows=1"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": {
+      "numFound": 238730,
+      "start": 0,
+      "maxRows": 1,
+      "type": "person",
+      "lang": "de",
+      "docs": [
+        {
+          "id": 12117,
+          "link": "https://freidok.uni-freiburg.de/pers/12117",
+          "names": [
+            {
+              "forename": "Jürgen",
+              "surname": "Hennig",
+              "value": "Hennig, Jürgen"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

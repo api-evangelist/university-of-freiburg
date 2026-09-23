@@ -1,0 +1,99 @@
+{
+  "generated": "2026-09-01",
+  "method": "probed",
+  "source": "https://freidok.uni-freiburg.de/jsonApi/v1/publications?maxRows=1",
+  "x-operator": "institution",
+  "note": "Unmodified live response captured 2026-09-01. Note orcid_link / orcid_validated and gnd_link on person entries — FreiDok plus stores validated ORCID iDs.",
+  "request": {
+    "method": "GET",
+    "url": "https://freidok.uni-freiburg.de/jsonApi/v1/publications?maxRows=1"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": {
+      "numFound": 267771,
+      "start": 0,
+      "maxRows": 1,
+      "type": "publication",
+      "lang": "de",
+      "docs": [
+        {
+          "id": 271690,
+          "link": "https://freidok.uni-freiburg.de/data/271690",
+          "publication_year": {
+            "value": 2026
+          },
+          "publication_date": {
+            "value": ""
+          },
+          "titles": [
+            {
+              "language": "eng",
+              "language_value": "englisch",
+              "value": "Error analysis for a Crouzeix-Raviart approximation of the obstacle problem"
+            }
+          ],
+          "publisher": {
+            "place": "",
+            "value": ""
+          },
+          "persons": [
+            {
+              "type": "author",
+              "type_value": "Autor:in",
+              "norm_id": 23411,
+              "link": "https://freidok.uni-freiburg.de/pers/23411",
+              "is_corresponding_author": false,
+              "affiliations": [
+                {
+                  "norm_id": 2517,
+                  "value": "Abteilung für Angewandte Mathematik",
+                  "sup_no": 1,
+                  "link": "https://freidok.uni-freiburg.de/inst/2517",
+                  "lifetime": "01.10.2002 - "
+                }
+              ],
+              "author_function": {
+                "type": "first_author",
+                "value": "Erst-Autor:in",
+                "sup_no": "a"
+              },
+              "selected_name_form": 1,
+              "gnd_link": "https://d-nb.info/gnd/1117057089",
+              "orcid_link": "https://orcid.org/0000-0002-8084-5112",
+              "orcid_validated": true,
+              "forename": "Soeren",
+              "surname": "Bartels",
+              "value": "Bartels, Soeren"
+            },
+            {
+              "type": "author",
+              "type_value": "Autor:in",
+              "norm_id": 282268,
+              "link": "https://freidok.uni-freiburg.de/pers/282268",
+              "is_corresponding_author": true,
+              "affiliations": [],
+              "author_function": {
+                "type": "last_author",
+                "value": "Letzt-Autor:in",
+                "sup_no": "b"
+              },
+              "selected_name_form": 1,
+              "gnd_link": "https://d-nb.info/gnd/1245824821",
+              "orcid_link": "https://orcid.org/0000-0001-6478-7963",
+              "orcid_validated": false,
+              "forename": "Alex",
+              "surname": "Kaltenbach",
+              "value": "Kaltenbach, Alex"
+            }
+          ],
+          "persons_stat": {
+            "total_count": 2,
+            "additional_count": 0
+          }
+        }
+      ]
+    }
+  }
+}

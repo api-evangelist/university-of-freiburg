@@ -1,0 +1,26 @@
+{
+  "provider": "university-of-freiburg",
+  "sources": [
+    "_original/university-of-freiburg-freidok-plus-json-api-openapi.yml"
+  ],
+  "outputs": [
+    "university-of-freiburg-institutions-api-openapi.yml",
+    "university-of-freiburg-persons-api-openapi.yml",
+    "university-of-freiburg-projects-api-openapi.yml",
+    "university-of-freiburg-publications-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "university-of-freiburg-freidok-plus-json-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "university-of-freiburg-institutions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "university-of-freiburg-persons-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "university-of-freiburg-projects-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "university-of-freiburg-publications-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

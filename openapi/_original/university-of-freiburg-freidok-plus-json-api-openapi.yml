@@ -1,0 +1,176 @@
+openapi: 3.1.0
+info:
+  title: FreiDok plus JSON API
+  version: v1
+  x-generated: '2026-09-01'
+  x-method: probed
+  x-source: >-
+    Written from live probes of https://freidok.uni-freiburg.de/jsonApi/v1/ on 2026-09-01.
+    Every path, parameter, status code and response field below was observed in an actual
+    HTTP response; nothing is inferred from vendor documentation. The University of Freiburg
+    does not publish an OpenAPI description of this API.
+  x-operator: institution
+  description: >-
+    Read-only JSON API of FreiDok plus, the institutional repository, university bibliography
+    and research documentation system operated by the Universitätsbibliothek Freiburg
+    (University of Freiburg library) on the university's own infrastructure at
+    freidok.uni-freiburg.de. Four collection endpoints are publicly reachable without
+    credentials and return a common envelope of numFound / start / maxRows / type / lang / docs.
+    Observed 2026-09-01: 267,771 publications, 238,730 persons, 1,277 institutions,
+    10,612 projects.
+  contact:
+    name: Universitätsbibliothek Freiburg — FreiDok plus
+    url: https://www.ub.uni-freiburg.de/
+  license:
+    name: Not stated by the operator
+servers:
+  - url: https://freidok.uni-freiburg.de/jsonApi/v1
+    description: Production, anonymous read access
+tags:
+  - name: publications
+  - name: persons
+  - name: institutions
+  - name: projects
+paths:
+  /publications:
+    get:
+      tags: [publications]
+      operationId: listPublications
+      summary: List publication metadata records
+      description: >-
+        Returns publication records from the university bibliography. Probed 2026-09-01:
+        numFound 267771.
+      parameters:
+        - $ref: '#/components/parameters/maxRows'
+        - $ref: '#/components/parameters/start'
+        - name: year
+          in: query
+          required: false
+          description: >-
+            Restricts results to a publication year. Probed: year=2025 narrowed numFound from
+            267771 to 7696.
+          schema: { type: integer }
+        - name: instId
+          in: query
+          required: false
+          description: >-
+            Restricts results to publications affiliated with a FreiDok institution id.
+            Probed: instId=2517 narrowed numFound to 267.
+          schema: { type: integer }
+      responses:
+        '200':
+          description: A publication result envelope
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ResultEnvelope' }
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /persons:
+    get:
+      tags: [persons]
+      operationId: listPersons
+      summary: List person (author) records
+      parameters:
+        - $ref: '#/components/parameters/maxRows'
+        - $ref: '#/components/parameters/start'
+      responses:
+        '200':
+          description: A person result envelope
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ResultEnvelope' }
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /institutions:
+    get:
+      tags: [institutions]
+      operationId: listInstitutions
+      summary: List institution (faculty, department, chair) records
+      parameters:
+        - $ref: '#/components/parameters/maxRows'
+        - $ref: '#/components/parameters/start'
+      responses:
+        '200':
+          description: An institution result envelope
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ResultEnvelope' }
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /projects:
+    get:
+      tags: [projects]
+      operationId: listProjects
+      summary: List research project records
+      parameters:
+        - $ref: '#/components/parameters/maxRows'
+        - $ref: '#/components/parameters/start'
+      responses:
+        '200':
+          description: A project result envelope
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ResultEnvelope' }
+        '400':
+          $ref: '#/components/responses/BadRequest'
+components:
+  parameters:
+    maxRows:
+      name: maxRows
+      in: query
+      required: false
+      description: >-
+        Page size. Server default 20. Probed range 1-100; maxRows=101 and maxRows=200 both
+        return HTTP 400 with errorMsg "invalid value for maxRows (1-100)". maxRows=0 returns
+        200 with an empty docs array and the full numFound, which is a usable count-only call.
+      schema: { type: integer, minimum: 0, maximum: 100, default: 20 }
+    start:
+      name: start
+      in: query
+      required: false
+      description: >-
+        Zero-based result offset, echoed back in the response envelope. Probed: start=10.
+        NOTE the parameters named in some third-party descriptions of this API — startitem
+        and maxitems — were probed on 2026-09-01 and are silently ignored by the server.
+      schema: { type: integer, minimum: 0, default: 0 }
+  responses:
+    BadRequest:
+      description: Invalid parameter value
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+          examples:
+            maxRowsOutOfRange:
+              value:
+                statusCode: 400
+                errorCode: 0
+                errorMsg: invalid value for maxRows (1-100)
+  schemas:
+    ResultEnvelope:
+      type: object
+      description: Envelope returned by every collection endpoint.
+      required: [numFound, start, maxRows, type, lang, docs]
+      properties:
+        numFound: { type: integer, description: Total records matching the query }
+        start: { type: integer, description: Offset of the first returned record }
+        maxRows: { type: integer, description: Number of records requested }
+        type:
+          type: string
+          description: Record type of this collection
+          enum: [publication, person, institution, project]
+        lang: { type: string, description: 'Language of the label values, e.g. de' }
+        docs:
+          type: array
+          description: >-
+            Records. Field sets differ per type; every record carries id and link, and each
+            observed type is described in
+            json-schema/university-of-freiburg-freidok-plus-response-schema.json.
+          items: { type: object }
+    Error:
+      type: object
+      description: Error envelope observed on 400 and 404 responses.
+      required: [statusCode, errorCode, errorMsg]
+      properties:
+        statusCode: { type: integer }
+        errorCode: { type: integer }
+        errorMsg: { type: string, description: Human-readable message, German or English }
