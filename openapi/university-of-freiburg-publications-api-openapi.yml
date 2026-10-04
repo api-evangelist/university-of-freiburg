@@ -50,19 +50,6 @@ paths:
         '400':
           $ref: '#/components/responses/BadRequest'
 components:
-  responses:
-    BadRequest:
-      description: Invalid parameter value
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          examples:
-            maxRowsOutOfRange:
-              value:
-                statusCode: 400
-                errorCode: 0
-                errorMsg: invalid value for maxRows (1-100)
   parameters:
     maxRows:
       name: maxRows
@@ -84,22 +71,6 @@ components:
         minimum: 0
         default: 0
   schemas:
-    Error:
-      type: object
-      description: Error envelope observed on 400 and 404 responses.
-      required:
-      - statusCode
-      - errorCode
-      - errorMsg
-      properties:
-        statusCode:
-          type: integer
-        errorCode:
-          type: integer
-        errorMsg:
-          type: string
-          description: Human-readable message
-          German or English: null
     ResultEnvelope:
       type: object
       description: Envelope returned by every collection endpoint.
@@ -136,3 +107,32 @@ components:
           description: Records. Field sets differ per type; every record carries id and link, and each observed type is described in json-schema/university-of-freiburg-freidok-plus-response-schema.json.
           items:
             type: object
+    Error:
+      type: object
+      description: Error envelope observed on 400 and 404 responses.
+      required:
+      - statusCode
+      - errorCode
+      - errorMsg
+      properties:
+        statusCode:
+          type: integer
+        errorCode:
+          type: integer
+        errorMsg:
+          type: string
+          description: Human-readable message
+          German or English: null
+  responses:
+    BadRequest:
+      description: Invalid parameter value
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            maxRowsOutOfRange:
+              value:
+                statusCode: 400
+                errorCode: 0
+                errorMsg: invalid value for maxRows (1-100)
