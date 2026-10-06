@@ -62,7 +62,7 @@ tags:
   - Identity Federation
   - Germany
 created: '2026-06-03'
-modified: '2026-09-01'
+modified: '2026-10-06'
 specificationVersion: '0.23'
 x-coverage:
   state: covered
@@ -380,6 +380,8 @@ apis:
   - type: SourceCode
     url: https://pypi.org/project/freidok-cli/
 common:
+  - url: https://uni-freiburg.de/feed/
+    type: BlogRSS
   - type: VulnerabilityDisclosure
     url: security/university-of-freiburg-vulnerability-disclosure.yml
   - type: DomainSecurity
