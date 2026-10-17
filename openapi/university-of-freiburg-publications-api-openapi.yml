@@ -51,6 +51,15 @@ paths:
           $ref: '#/components/responses/BadRequest'
 components:
   parameters:
+    start:
+      name: start
+      in: query
+      required: false
+      description: 'Zero-based result offset, echoed back in the response envelope. Probed: start=10. NOTE the parameters named in some third-party descriptions of this API — startitem and maxitems — were probed on 2026-09-01 and are silently ignored by the server.'
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
     maxRows:
       name: maxRows
       in: query
@@ -61,15 +70,6 @@ components:
         minimum: 0
         maximum: 100
         default: 20
-    start:
-      name: start
-      in: query
-      required: false
-      description: 'Zero-based result offset, echoed back in the response envelope. Probed: start=10. NOTE the parameters named in some third-party descriptions of this API — startitem and maxitems — were probed on 2026-09-01 and are silently ignored by the server.'
-      schema:
-        type: integer
-        minimum: 0
-        default: 0
   schemas:
     ResultEnvelope:
       type: object
